@@ -1,2 +1,2 @@
-# CryptoPigs
- TypeScript & React
+# Funkiverse
+ NFT & TypeScript & React

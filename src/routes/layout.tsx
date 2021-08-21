@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Sidebar from "~/components/Sidebar";
+import Headerbar from "~/components/Headerbar";
 import * as S from "./layoutStyle";
 
 interface Props {
@@ -8,16 +8,10 @@ interface Props {
 }
 
 const AppLayout : React.FC<Props> = ({component, props}) => {
-  const[openDrop, setOpenDrop] = useState(false);
 
   return (
     <S.Container>
-      <S.DropButton onClick={() => {console.log('open', openDrop); setOpenDrop(true);}} className={openDrop?"display-none":""}>
-        <span className="bg-black rounded"/>
-        <span className="bg-black rounded middle"/>
-        <span className="bg-black rounded"/>
-      </S.DropButton>
-      <Sidebar history={props.history} mini={openDrop} closeMini={() => setOpenDrop(false)}/>
+      <Headerbar history={props.history} />
       <S.Main>
         {React.createElement(component, props)}
       </S.Main>

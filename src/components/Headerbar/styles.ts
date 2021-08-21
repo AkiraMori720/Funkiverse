@@ -58,7 +58,7 @@ export const Menus = styled.div`
   margin-top: 60px;
   `;
 
-export const Bottom = styled.div`
+export const Action = styled.div`
   margin-bottom: 48px;
 
   div.farm--link {
