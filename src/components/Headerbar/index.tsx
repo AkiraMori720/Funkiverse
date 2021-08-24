@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as S from './styles';
-import Menu from "./Menu";
+import Menu from './menu';
 
 interface Props {
   history: React.ComponentProps<any>
@@ -8,31 +8,32 @@ interface Props {
 
 
 const Headerbar: React.FC<Props> = ({history}) => {
-  const[connected, setConnected] = useState(true);
-
   return (
     <S.Container>
       <S.Navbar>
         <S.Logo className="float-none">
           <a href="/">
-            <img src={"/images/logo.png"} alt={"logo"}/>
+            <img src={"/images/logo-header.png"} alt={"logo"}/>
           </a>
         </S.Logo>
         <S.Menus>
-          <Menu onClick={() => {history.push('/');}} icon="/images/IconsPersonalLogin.svg" label={connected?"Hi, 0x000000000000000000000":"Connect Wallet"}/>
-          <Menu onClick={() => {history.push('/');}} icon="/images/IconsMintPage.svg" label="Mint your own"/>
-          <Menu onClick={() => {history.push('/collection');}} icon="/images/IconsViewCollection.svg" label="View your collection"/>
-          <Menu onClick={() => {history.push('/all');}} icon="/images/IconsViewAllPigs.svg" label="View all minted pigs"/>
-          <Menu onClick={() => {history.push('/attribute');}} icon="/images/IconsPigAttributes.svg" label="Pig attributes"/>
-          <Menu onClick={() => {}} icon="/images/IconsMarketplace.svg" label="Marketplace" subLabel="coming soon"/>
+          <Menu history={history} path="/" label="HOME" />
+          <Menu history={history} path="/welcome" hash={"#"} label="WELCOME" />
+          <Menu history={history} path="/welcome" hash={"#buyafox"} label="BUYAFOX" />
+          <Menu history={history} path="/welcome" hash={"#loadmap"} label="ROADMAP" />
+          <Menu history={history} path="/welcome" hash={"#team"} label="TEAM" />
+          <Menu history={history} path="/provenance" label="PROVENANCE" />
+          <Menu history={history} path="/gallery" label="GALLERY" />
         </S.Menus>
         <S.Action>
           <div className="social--link">
-            <a href=""><img src={"/images/SocialIconTelegram.svg"} alt={"telegram"}/></a>
-            <a href=""><img src={"/images/SocialIconTwitter.svg"} alt={"twitter"}/></a>
-            <a href=""><img src={"/images/SocialIconDiscord.svg"} alt={"discord"}/></a>
+            <a href=""><img src={"/images/link_1.png"} alt={"wallet"}/></a>
+            <a href=""><img src={"/images/link_twitter.png"} alt={"twitter"}/></a>
+            <a href=""><img src={"/images/link_youtube.png"} alt={"youtube"}/></a>
+            <a href=""><img src={"/images/link_tumblr.png"} alt={"tumblr"}/></a>
+            <a href=""><img src={"/images/link_instagram.png"} alt={"instagram"}/></a>
           </div>
-          <div className="farm--link"><a href="#">CONNECT WALLET</a></div>
+          <div className="connect--btn"><a href="#">CONNECT WALLET</a></div>
         </S.Action>
       </S.Navbar>
     </S.Container>

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Headerbar from "~/components/Headerbar";
 import * as S from "./layoutStyle";
+import Footer from "~/components/Footer";
 
 interface Props {
   component: React.FC,
@@ -15,6 +16,7 @@ const AppLayout : React.FC<Props> = ({component, props}) => {
       <S.Main>
         {React.createElement(component, props)}
       </S.Main>
+      <Footer history={props.history} />
     </S.Container>
   );
 }

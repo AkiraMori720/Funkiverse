@@ -1,120 +1,103 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import * as S from './styles';
-import Modal from "react-modal";
+import ReactPlayer from 'react-player';
+import { Scrollbars } from 'react-custom-scrollbars';
+import Fox from "~/pages/Home/fox";
 
 const Home: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [favorites, setFavorites] = useState([] as Number[]);
+  const foxes = [
+    {id: 1, name: '1', image: '/images/fox0.png'},
+    {id: 2, name: '2', image: '/images/fox1.png'},
+    {id: 3, name: '3', image: '/images/fox2.png'},
+    {id: 4, name: '4', image: '/images/fox3.png'},
+    {id: 5, name: '5', image: '/images/fox4.png'},
+    {id: 6, name: '6', image: '/images/fox5.png'},
+    {id: 7, name: '7', image: '/images/fox6.png'},
+    {id: 8, name: '8', image: '/images/fox7.png'},
+    {id: 9, name: '9', image: '/images/fox8.png'},
+    {id: 10, name: '10', image: '/images/fox9.png'},
+  ];
 
-  const onMintOwn = () => {
+  const onToggleFavorite = (id:Number) => {
+      if(favorites.includes(id)){
+        setFavorites(favorites.filter(f => f!== id));
+      } else {
+        setFavorites([...favorites, id]);
+      }
+  }
+
+  const onClick = (id: Number) => {
 
   }
 
   return (
     <S.Container>
-      <S.IntroduceContainer>
+      <S.Section id="welcome_video">
+        <S.Title>
+          <label>WELCOME TO THE FUNKIVERSE</label>
+        </S.Title>
+        <ReactPlayer
+          url="/video/welcome.mp4"
+          playing
+          loop
+          width='100%'
+          height='100%'/>
+        <S.JoinUs>
+          <S.JoinContent>
+            <span>An exclusive NFT collection where the token grants you Funkizen status. Funkizens have the prospect for co-creating the future of the Funkiverse and also access to all it's undiscovered benefits. </span>
+          </S.JoinContent>
+          <S.JoinBtn>
+            <span>JOIN US!</span>
+          </S.JoinBtn>
+        </S.JoinUs>
+      </S.Section>
+
+      <S.Section id="introduce">
         <S.Introduce>
-          <S.Title>what is/are cryptopigs?</S.Title>
-          <S.Content>
-            Cryptopigs is an NFT project that uses Harmony's HRC721 standard and features 5.000 uniquely generated variations of the Piggybank Yield Farm mascot. Each Piggy NFT is minted with four to seven attributes, some being rarer than others. We made so many attributes, we could've generated over 20 million pigs - but we wanted to keep the supply low!
-            <br/><br/>
-            By adding up the rarities for each attribute, you can calculate the value of each Cryptopig, which is also shown by the Piggy's background. If you're lucky, you might be able to mint one of 20 Piggies with an elusive Rainbow-colored background!
-          </S.Content>
+          <S.IntroduceTitle>
+            FEELIN FUNKI?
+          </S.IntroduceTitle>
+          <S.IntroduceContent>
+            <span>
+              HIT THE BUTTON TO FIND OUT YOUR FUNKI PERCENTAGE!<br/>
+              100% gets you a Free Fox!
+            </span>
+            <S.IntroduceEmpress>
+              <span>
+                SIMPLE GAME LIKE THE ONE ON PICKLES.<br/><br/>
+                FOR LANDING PAGE VISITORS TO INTERACT WITH WEBSITE.<br/><br/>
+                100% = Free fox.<br/><br/>
+                You can put 20 FREE FOX "TICKETS" in the game, so if someone wins, they can enter their email and eth address in a simple form.
+              </span>
+            </S.IntroduceEmpress>
+          </S.IntroduceContent>
         </S.Introduce>
-        <S.MintContainer>
-          <S.ButtonContainer>
-            <img src={"/images/MintButtonBackground.png"} alt="mint"/>
-            <S.MintButton><S.Button onClick={() => onMintOwn()}>MINT YOUR OWN</S.Button></S.MintButton>
-          </S.ButtonContainer>
-          <S.MintLabel>
-            x out of 5,000 minted
-          </S.MintLabel>
-        </S.MintContainer>
-        <S.Introduce className={"right--intro"}>
-          <S.Title>cryptopigs tokenomics</S.Title>
-          <S.Content>
-            You can mint a Piggy yourself for 500 ONE. Of these minting fees, 5% are reflected to Piggy owners, 20% is sent to the artist, the remaining 75% is used to strengthen the Piggybank project, to cover future development of additional gamification features, a marketplace for you to swap your NFTs, marketing costs and COINK staking incentives.
-            <br/><br/>
-            We intend to keep adding value to Cryptopigs, even after all pigs have been minted. By getting a Piggy, not only will you own oinkredible, unique, limited edition art on the blockchain, support a great artist and help develop the Piggybank ecosystem - but you will also be presented with unique opportunities to play with your pig - Piggybank is working on Piggy NFT gamification for your farming efforts with virtual pet and PvP mechanics, as well as integration with the worlds.freyala.com NFT and gaming ecosystem.
-          </S.Content>
+        <S.Introduce>
+          <S.IntroduceTitle>
+            PROLOGUE
+          </S.IntroduceTitle>
+          <S.IntroduceContent>
+            <span>
+              11 millennia after an induced hibernation, a skulk of foxes awaken to discover themselves in the peculiar caves of Zoza. Following their awakening from this unnatural slumber, they searched within the caves and its surroundings in vain for a place to quench their thirst.<br/><br/>
+              Leaving the caves, they journeyed through the thick forest and eventually stumbled upon a shack that looked like it had seen better days. Luckily for them, the place was open but the only option available was a purple sparkly liquid labelled "Funki Juice"<br/><br/>
+              With no choice or options left, they quickly chugged this down and before any of them could even realize, it triggered a series of irreversible transformations and teleported them straight into a magical alternate universe called the Funkiverse.<br/><br/>
+              These foxes became known as the Funki Foxes.
+            </span>
+          </S.IntroduceContent>
         </S.Introduce>
-      </S.IntroduceContainer>
-      <S.RecentMints>
-        <S.RecentLabel>most recent mints</S.RecentLabel>
-        <S.Mints>
-          <S.Mint onClick={() => setIsOpen(true)}>
-            <img src={"/images/pig.png"} alt="mint"/>
-          </S.Mint>
-          <S.MiddleMint onClick={() => setIsOpen(true)}>
-            <img src={"/images/pig.png"} alt="mint"/>
-          </S.MiddleMint>
-          <S.Mint onClick={() => setIsOpen(true)}>
-            <img src={"/images/pig.png"} alt="mint"/>
-          </S.Mint>
-        </S.Mints>
-      </S.RecentMints>
-      <Modal
-        isOpen={isOpen}
-        ariaHideApp={false}
-        style={{
-          overlay: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(60, 37, 53, 0.25)',
-            zIndex: 99,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '100%',
-            maxWidth: '500px',
-            zIndex: 9999
-          },
-        }}
-      >
-        <S.ModalBody>
-          <S.ModalTitle>hooray, you now own Piggy no. x!</S.ModalTitle>
-          <S.ModalContent>
-            <img src={"/images/pig.png"} alt={"pig"}/>
-            <S.ContentDetail>
-              <S.DetailItem>
-                <S.ItemTitle>Body</S.ItemTitle>
-                <S.ItemContent>red body</S.ItemContent>
-              </S.DetailItem>
-              <S.DetailItem>
-                <S.ItemTitle>Nose</S.ItemTitle>
-                <S.ItemContent>hot pink nose</S.ItemContent>
-              </S.DetailItem>
-              <S.DetailItem>
-                <S.ItemTitle>Eyes</S.ItemTitle>
-                <S.ItemContent>tired eyes</S.ItemContent>
-              </S.DetailItem>
-              <S.DetailItem>
-                <S.ItemTitle>Dome</S.ItemTitle>
-                <S.ItemContent>green party hat</S.ItemContent>
-              </S.DetailItem>
-              <S.DetailItem>
-                <S.ItemTitle>Front</S.ItemTitle>
-                <S.ItemContent>drink</S.ItemContent>
-              </S.DetailItem>
-              <S.DetailItem>
-                <S.ItemTitle>Back</S.ItemTitle>
-                <S.ItemContent>dark clouds</S.ItemContent>
-              </S.DetailItem>
-            </S.ContentDetail>
-          </S.ModalContent>
-          <S.ModalAction>
-            <S.ModalButton onClick={() => setIsOpen(false)}>CONFIRM</S.ModalButton>
-          </S.ModalAction>
-        </S.ModalBody>
-      </Modal>
+      </S.Section>
+
+      <S.Section id="foxes">
+        <Scrollbars
+          className={"area"}
+        >
+        {
+          foxes.map(fox => <Fox key={fox.id} name={fox.name} image={fox.image} isFavorite={favorites.includes(fox.id)} onToggleFavorite={() => onToggleFavorite(fox.id)} onClick={() => onClick(fox.id)}/> )
+        }
+        </Scrollbars>
+      </S.Section>
     </S.Container>
   );
 };
