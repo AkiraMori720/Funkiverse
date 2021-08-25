@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Headerbar from "~/components/Headerbar";
 import * as S from "./layoutStyle";
 import Footer from "~/components/Footer";

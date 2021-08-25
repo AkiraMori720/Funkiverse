@@ -10,6 +10,13 @@ interface FoxObject {
   image: string
 }
 
+interface Window {
+  swiper: any;
+  document: any;
+}
+
+declare var window: Window;
+
 const Home: React.FC = () => {
   const [favorites, setFavorites] = useState([] as Number[]);
   const [activeFox, setActiveFox] = useState(null as FoxObject | null);

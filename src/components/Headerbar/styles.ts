@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import {typography} from "~/styles/typography";
-import {CloseOutline} from '@styled-icons/evaicons-outline/CloseOutline';
 
 export const Container = styled.div`
   z-index: 1;

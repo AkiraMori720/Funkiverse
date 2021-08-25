@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
 import * as S from './styles';
-import Modal from "react-modal";
 
 const Provenance: React.FC = () => {
   const [loading, setLoading] = useState(true);
