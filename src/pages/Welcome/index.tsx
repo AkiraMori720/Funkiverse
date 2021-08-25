@@ -1,23 +1,105 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import * as S from './styles';
 import ReactPlayer from "react-player/lazy";
 import Fox from "./fox";
 
+interface FoxObject {
+  id: number;
+  name: string,
+  image: string
+}
+
 const Welcome: React.FC = () => {
-  const [favorites, setFavorites] = useState([] as string[]);
-  const onToggleFavorite = (name:string) => {
-    if(favorites.includes(name)){
-      setFavorites(favorites.filter(f => f!== name));
+  const [favorites, setFavorites] = useState([] as Number[]);
+  const [activeFox, setActiveFox] = useState(null as FoxObject | null);
+  const [isFull, setIsFull] = useState(false);
+  const moreFoxes : FoxObject[] = [
+    {id: 1, name: 'more-1', image: '/images/more-1.png'},
+    {id: 2, name: 'more-2', image: '/images/more-2.png'},
+    {id: 3, name: 'more-3', image: '/images/more-3.png'},
+    {id: 4, name: 'more-4', image: '/images/more-4.png'},
+    {id: 5, name: 'more-5', image: '/images/more-5.png'},
+    {id: 6, name: 'more-6', image: '/images/more-6.png'},
+    {id: 7, name: 'more-7', image: '/images/more-7.png'}
+  ];
+
+  const onToggleFavorite = (id:Number) => {
+    if(favorites.includes(id)){
+      setFavorites(favorites.filter(f => f!== id));
     } else {
-      setFavorites([...favorites, name]);
+      setFavorites([...favorites, id]);
     }
   }
 
-  const onClick = (name: string) => {
 
+  const onClick = (id: Number) => {
+    const fox = moreFoxes.find(f => f.id === id);
+    if(fox){
+      setActiveFox(fox);
+    }
   }
 
+  const toggleFullScreen = () => {
+    let document:Document = window.document;
+    let elem = document.documentElement;
+    if(!isFull){
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+    setIsFull(!isFull);
+  }
+
+  const onMoveActive = (next = false) => {
+    if(activeFox){
+      let index = 0;
+      moreFoxes.forEach((f, i) => {
+        if(f.id === activeFox.id){
+          index = i;
+        }
+      });
+      console.log('index', index);
+      if(next){
+        index++;
+        index = index % (moreFoxes.length);
+      } else {
+        index--;
+        if(index < 0){
+          index = moreFoxes.length - 1;
+        }
+      }
+      setActiveFox(moreFoxes[index]);
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(window.swiper !== undefined){
+        let Swiper = window.swiper;
+        new Swiper('.fox__swiper', {
+          slidesPerView: 6.8,
+          slidesPerGroup: 1,
+          spaceBetween: 8,
+          speed: 800,
+          observer: true,
+          observeParents: true,
+          navigation: {
+            nextEl: '.fox__swiper-button-next',
+            prevEl: '.fox__swiper-button-prev',
+          },
+          scrollbar: {
+            el: '.swiper-scrollbar',
+            draggable: true,
+          },
+        });
+      }
+    }, 100);
+  })
 
   return (
     <S.Container>
@@ -108,30 +190,30 @@ const Welcome: React.FC = () => {
           <div className={"foxes-items-21"}>
             <div className={"foxes-items-31"}>
               <div className={"foxes-items-4"}>
-                <Fox name={"more-1"} image={'/images/more-1.png'} isFavorite={favorites.includes("more-1")} onToggleFavorite={() => onToggleFavorite("more-1")} onClick={() => onClick("more-1")}/>
+                <Fox name={"more-1"} image={'/images/more-1.png'} isFavorite={favorites.includes(1)} onToggleFavorite={() => onToggleFavorite(1)} onClick={() => onClick(1)}/>
               </div>
               <div className={"foxes-items-4"}>
-                <Fox name={"more-2"} image={'/images/more-2.png'} isFavorite={favorites.includes("more-2")} onToggleFavorite={() => onToggleFavorite("more-2")} onClick={() => onClick("more-2")}/>
+                <Fox name={"more-2"} image={'/images/more-2.png'} isFavorite={favorites.includes(2)} onToggleFavorite={() => onToggleFavorite(2)} onClick={() => onClick(2)}/>
               </div>
             </div>
             <div className={"foxes-items-32"}>
-              <Fox name={"more-3"} image={'/images/more-3.png'} isFavorite={favorites.includes("more-3")} onToggleFavorite={() => onToggleFavorite("more-3")} onClick={() => onClick("more-3")}/>
+              <Fox name={"more-3"} image={'/images/more-3.png'} isFavorite={favorites.includes(3)} onToggleFavorite={() => onToggleFavorite(3)} onClick={() => onClick(3)}/>
             </div>
           </div>
           <div className={"foxes-items-22"}>
             <div className={"foxes-items-33"}>
-              <Fox name={"more-4"} image={'/images/more-4.png'} isFavorite={favorites.includes("more-4")} onToggleFavorite={() => onToggleFavorite("more-4")} onClick={() => onClick("more-4")}/>
+              <Fox name={"more-4"} image={'/images/more-4.png'} isFavorite={favorites.includes(4)} onToggleFavorite={() => onToggleFavorite(4)} onClick={() => onClick(4)}/>
             </div>
             <div className={"foxes-items-33"}>
-              <Fox name={"more-5"} image={'/images/more-5.png'} isFavorite={favorites.includes("more-5")} onToggleFavorite={() => onToggleFavorite("more-5")} onClick={() => onClick("more-5")}/>
+              <Fox name={"more-5"} image={'/images/more-5.png'} isFavorite={favorites.includes(5)} onToggleFavorite={() => onToggleFavorite(5)} onClick={() => onClick(5)}/>
             </div>
           </div>
         </div>
         <div className={"foxes-items-1"}>
-          <Fox name={"more-6"} image={'/images/more-6.png'} isFavorite={favorites.includes("more-6")} onToggleFavorite={() => onToggleFavorite("more-6")} onClick={() => onClick("more-6")}/>
+          <Fox name={"more-6"} image={'/images/more-6.png'} isFavorite={favorites.includes(6)} onToggleFavorite={() => onToggleFavorite(6)} onClick={() => onClick(6)}/>
         </div>
         <div className={"foxes-items-1"}>
-          <Fox name={"more-7"} image={'/images/more-7.png'} isFavorite={favorites.includes("more-7")} onToggleFavorite={() => onToggleFavorite("more-7")} onClick={() => onClick("more-7")}/>
+          <Fox name={"more-7"} image={'/images/more-7.png'} isFavorite={favorites.includes(7)} onToggleFavorite={() => onToggleFavorite(7)} onClick={() => onClick(7)}/>
         </div>
       </S.Section>
 
@@ -221,6 +303,50 @@ const Welcome: React.FC = () => {
           <S.AddressContent>0x.......................</S.AddressContent>
         </S.Address>
       </S.Section>
+
+      {
+        activeFox?
+          <S.FullScreenFoxes>
+            <S.FullScreenHeader>
+              <S.HeaderLeft>
+                {
+                  isFull?
+                    <S.Shrink2Icon size={48} onClick={toggleFullScreen}/>
+                    :
+                    <S.ArrowsAngleExpandIcon size={48} onClick={toggleFullScreen}/>
+                }
+                {
+                  favorites.includes(activeFox.id)?
+                    <><S.HearFillIcon size={48} onClick={() => onToggleFavorite(activeFox.id)}/> 1</>
+                    :
+                    <S.HearWhiteIcon size={48} onClick={() => onToggleFavorite(activeFox.id)}/>
+                }
+              </S.HeaderLeft>
+              <S.HeaderRight>
+                <S.CloseIcon size={48} onClick={() => setActiveFox(null)}/>
+              </S.HeaderRight>
+            </S.FullScreenHeader>
+            <S.FullScreenContent>
+              <S.ContentImage>
+                <S.LeftIcon>
+                  <S.ChevronLeftIcon size={48} onClick={() => onMoveActive(false)}/>
+                </S.LeftIcon>
+                <S.SliderFoxImage>
+                  <img src={activeFox.image} alt={activeFox.name}/>
+                </S.SliderFoxImage>
+                <S.RightIcon>
+                  <S.ChevronRightIcon size={48} onClick={() => onMoveActive(true)}/>
+                </S.RightIcon>
+              </S.ContentImage>
+              <S.ContentCaption>
+                <div className={"fox-name"}>{activeFox.name}</div>
+                <div className={"fox-caption"}>{activeFox.image}</div>
+              </S.ContentCaption>
+            </S.FullScreenContent>
+          </S.FullScreenFoxes>
+          :null
+      }
+
     </S.Container>
   );
 };

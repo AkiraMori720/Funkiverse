@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import {Heart} from "@styled-icons/bootstrap/Heart";
 import {HeartFill} from "@styled-icons/bootstrap/HeartFill";
+import {ArrowsAngleExpand} from "@styled-icons/bootstrap/ArrowsAngleExpand";
+import {Shrink2} from "@styled-icons/icomoon/Shrink2";
+import {Close} from "@styled-icons/evil/Close";
+import {ChevronRight} from "@styled-icons/bootstrap/ChevronRight";
+import {ChevronLeft} from "@styled-icons/bootstrap/ChevronLeft";
 
 export const Container = styled.div`
     max-width: 1216px;
@@ -320,6 +325,107 @@ export const HearIcon = styled(Heart)`
   color: black;
 `;
 
+
 export const HearFillIcon = styled(HeartFill)`
   color: red;
 `;
+
+export const FullScreenFoxes = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: black;
+  color: white;
+  z-index: 999;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const FullScreenHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+
+export const HeaderLeft = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 160px;
+  font-size: 32px;
+`;
+
+
+export const ArrowsAngleExpandIcon = styled(ArrowsAngleExpand)`
+  color: white;
+  cursor: pointer;
+`;
+
+export const Shrink2Icon = styled(Shrink2)`
+  color: white;
+  cursor: pointer;
+`;
+
+export const HearWhiteIcon = styled(Heart)`
+  color: white;
+  cursor: pointer;
+`;
+
+export const CloseIcon = styled(Close)`
+  color: white;
+  cursor: pointer;
+`;
+
+
+export const HeaderRight = styled.div`
+
+`;
+
+
+export const FullScreenContent = styled.div`
+  display: flex;
+  flex-grow: 1;
+`;
+
+export const ContentImage = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 66%;
+  padding: 6rem;
+`;
+
+export const RightIcon = styled.div`
+
+`;
+
+export const ChevronRightIcon = styled(ChevronRight)`
+  color: white;
+  cursor: pointer;
+`;
+
+
+export const SliderFoxImage = styled.div`
+  img{
+    width: 560px;
+    height: 700px;
+  }
+`;
+
+export const LeftIcon = styled.div`
+
+`;
+
+export const ChevronLeftIcon = styled(ChevronLeft)`
+  color: white;
+  cursor: pointer;
+`;
+
+export const ContentCaption = styled.div`
+  padding-top: 2rem;
+  font-size: 48px;
+  font-weight: bold;
+`;
+

@@ -1,13 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import * as S from './styles';
 import ReactPlayer from 'react-player';
-import { Scrollbars } from 'react-custom-scrollbars';
 import Fox from "~/pages/Home/fox";
+
+interface FoxObject {
+  id: number;
+  name: string,
+  image: string
+}
 
 const Home: React.FC = () => {
   const [favorites, setFavorites] = useState([] as Number[]);
-  const foxes = [
+  const [activeFox, setActiveFox] = useState(null as FoxObject | null);
+  const [isFull, setIsFull] = useState(false);
+  const foxes : FoxObject[] = [
     {id: 1, name: '1', image: '/images/fox0.png'},
     {id: 2, name: '2', image: '/images/fox1.png'},
     {id: 3, name: '3', image: '/images/fox2.png'},
@@ -28,9 +35,70 @@ const Home: React.FC = () => {
       }
   }
 
-  const onClick = (id: Number) => {
-
+  const onClick = (fox: FoxObject) => {
+    setActiveFox(fox);
   }
+
+  const toggleFullScreen = () => {
+    let document:Document = window.document;
+    let elem = document.documentElement;
+    if(!isFull){
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+    setIsFull(!isFull);
+  }
+
+  const onMoveActive = (next = false) => {
+    if(activeFox){
+      let index = 0;
+      foxes.forEach((f, i) => {
+        if(f.id === activeFox.id){
+          index = i;
+        }
+      });
+      console.log('index', index);
+      if(next){
+        index++;
+        index = index % (foxes.length);
+      } else {
+        index--;
+        if(index < 0){
+          index = foxes.length - 1;
+        }
+      }
+      setActiveFox(foxes[index]);
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(window.swiper !== undefined){
+        let Swiper = window.swiper;
+        new Swiper('.fox__swiper', {
+          slidesPerView: 6.8,
+          slidesPerGroup: 1,
+          spaceBetween: 8,
+          speed: 800,
+          observer: true,
+          observeParents: true,
+          navigation: {
+            nextEl: '.fox__swiper-button-next',
+            prevEl: '.fox__swiper-button-prev',
+          },
+          scrollbar: {
+            el: '.swiper-scrollbar',
+            draggable: true,
+          },
+        });
+      }
+    }, 100);
+  })
 
   return (
     <S.Container>
@@ -90,14 +158,63 @@ const Home: React.FC = () => {
       </S.Section>
 
       <S.Section id="foxes">
-        <Scrollbars
-          className={"area"}
-        >
-        {
-          foxes.map(fox => <Fox key={fox.id} name={fox.name} image={fox.image} isFavorite={favorites.includes(fox.id)} onToggleFavorite={() => onToggleFavorite(fox.id)} onClick={() => onClick(fox.id)}/> )
-        }
-        </Scrollbars>
+        <div className="fox__swiper-outer">
+          <div className={"area fox__swiper"}>
+            <div className={"swiper-wrapper"}>
+              {
+                foxes.map((fox, index) => <Fox key={fox.id} name={fox.name} image={fox.image} isFavorite={favorites.includes(fox.id)} onToggleFavorite={() => onToggleFavorite(fox.id)} onClick={() => onClick(fox)}/> )
+              }
+            </div>
+            <div className={"fox__swiper-button-prev"}><img src={"/images/icn_swiper-button.svg"} alt="prev"/></div>
+            <div className={"fox__swiper-button-next"}><img src={"/images/icn_swiper-button.svg"} alt="next"/></div>
+            <div className={"swiper-scrollbar"}/>
+          </div>
+        </div>
       </S.Section>
+
+      {
+        activeFox?
+        <S.FullScreenFoxes>
+          <S.FullScreenHeader>
+            <S.HeaderLeft>
+              {
+                isFull?
+                  <S.Shrink2Icon size={48} onClick={toggleFullScreen}/>
+                  :
+                  <S.ArrowsAngleExpandIcon size={48} onClick={toggleFullScreen}/>
+              }
+              {
+                favorites.includes(activeFox.id)?
+                  <><S.HearFillIcon size={48} onClick={() => onToggleFavorite(activeFox.id)}/> 1</>
+                :
+                <S.HearWhiteIcon size={48} onClick={() => onToggleFavorite(activeFox.id)}/>
+              }
+            </S.HeaderLeft>
+            <S.HeaderRight>
+              <S.CloseIcon size={48} onClick={() => setActiveFox(null)}/>
+            </S.HeaderRight>
+          </S.FullScreenHeader>
+          <S.FullScreenContent>
+            <S.ContentImage>
+              <S.LeftIcon>
+                <S.ChevronLeftIcon size={48} onClick={() => onMoveActive(false)}/>
+              </S.LeftIcon>
+              <S.SliderFoxImage>
+                <img src={activeFox.image} alt={activeFox.name}/>
+              </S.SliderFoxImage>
+              <S.RightIcon>
+                <S.ChevronRightIcon size={48} onClick={() => onMoveActive(true)}/>
+              </S.RightIcon>
+            </S.ContentImage>
+            <S.ContentCaption>
+              <div className={"fox-name"}>{activeFox.name}</div>
+              <div className={"fox-caption"}>{activeFox.image}</div>
+            </S.ContentCaption>
+          </S.FullScreenContent>
+        </S.FullScreenFoxes>
+          :null
+      }
+
     </S.Container>
   );
 };

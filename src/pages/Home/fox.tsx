@@ -13,7 +13,7 @@ interface Props {
 const Fox: React.FC<Props> = ({name, image, isFavorite, onToggleFavorite, onClick}) => {
 
   return (
-    <S.FoxContainer onClick={() => onClick()}>
+    <S.FoxContainer className={"swiper-slide"} onClick={() => onClick()}>
       <S.FoxImage src={image}/>
       <S.Favorite className={"favorite"} onClick={() => onToggleFavorite()}>
         {
