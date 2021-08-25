@@ -117,7 +117,9 @@ const Welcome: React.FC = () => {
           loop
           controls
           width='100%'
-          height='100%'/>
+          height='100%'
+          muted
+        />
       </S.Section>
       <S.Section id="what_is">
         <S.SectionTitle>WHAT IS FUNKI FOXES?</S.SectionTitle>
@@ -259,6 +261,7 @@ const Welcome: React.FC = () => {
             url="/video/info.mp4"
             playing
             loop
+            muted
             width='100%'
             height='100%'/>
         </S.LoadmapItem>

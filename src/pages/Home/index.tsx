@@ -117,8 +117,10 @@ const Home: React.FC = () => {
           url="/video/welcome.mp4"
           playing
           loop
+          muted
           width='100%'
-          height='100%'/>
+          height='100%'
+        />
         <S.JoinUs>
           <S.JoinContent>
             <span>An exclusive NFT collection where the token grants you Funkizen status. Funkizens have the prospect for co-creating the future of the Funkiverse and also access to all it's undiscovered benefits. </span>
