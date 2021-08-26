@@ -47,25 +47,25 @@ export const Section = styled.div`
         height: 400px;
       }
       .foxes-items-22{
-        with: 120px;
+        with: 140px;
         height: 400px;
       }
       .foxes-items-31{
         display: flex;
         with: 280px;
-        height: 120px;
+        height: 140px;
       }
       .foxes-items-32{
         with: 280px;
-        height: 280px;
+        height: 260px;
       }
      .foxes-items-33{
-        with: 120px;
+        with: 140px;
         height: 200px;
       }
       .foxes-items-4{
         width: 140px;
-        height: 120px;
+        height: 140px;
       }
     }
 
@@ -105,20 +105,8 @@ export const FoxImages = styled.div`
   div.imageContainer{
     width: 282px;
     height: 282px;
-    margin: 2px;
     display: inline-block;
-
-   &:hover{
-    background: #DDDDDD;
-    img{
-      opacity: 0.5;
-    }
-  }
-  }
-  img{
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+    margin: 4px;
   }
 `;
 
@@ -410,7 +398,7 @@ export const ChevronRightIcon = styled(ChevronRight)`
 export const SliderFoxImage = styled.div`
   img{
     width: 560px;
-    height: 700px;
+    height: 600px;
   }
 `;
 

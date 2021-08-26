@@ -10,13 +10,6 @@ interface FoxObject {
   image: string
 }
 
-interface Window {
-  swiper: any;
-  document: any;
-}
-
-declare var window: Window;
-
 const Welcome: React.FC = () => {
   const [favorites, setFavorites] = useState([] as Number[]);
   const [activeFox, setActiveFox] = useState(null as FoxObject | null);
@@ -31,6 +24,13 @@ const Welcome: React.FC = () => {
     {id: 7, name: 'more-7', image: '/images/more-7.png'}
   ];
 
+  const funkiFoxes : FoxObject[] = [
+    {id: 8, name: 'funki-1', image: '/images/what_1.png'},
+    {id: 9, name: 'funki-2', image: '/images/what_2.png'},
+    {id: 10, name: 'funki-3', image: '/images/what_3.png'},
+    {id: 11, name: 'funki-4', image: '/images/what_4.png'},
+  ];
+
   const onToggleFavorite = (id:Number) => {
     if(favorites.includes(id)){
       setFavorites(favorites.filter(f => f!== id));
@@ -41,7 +41,11 @@ const Welcome: React.FC = () => {
 
 
   const onClick = (id: Number) => {
-    const fox = moreFoxes.find(f => f.id === id);
+    let fox = moreFoxes.find(f => f.id === id);
+    if(!fox){
+      fox = funkiFoxes.find(f => f.id === id);
+    }
+
     if(fox){
       setActiveFox(fox);
     }
@@ -63,50 +67,35 @@ const Welcome: React.FC = () => {
   }
 
   const onMoveActive = (next = false) => {
-    if(activeFox){
-      let index = 0;
+    if(activeFox) {
+      let index = -1;
       moreFoxes.forEach((f, i) => {
-        if(f.id === activeFox.id){
+        if (f.id === activeFox.id) {
           index = i;
         }
       });
-      console.log('index', index);
-      if(next){
+      let foxes = moreFoxes;
+      if (index < 0) {
+        funkiFoxes.forEach((f, i) => {
+          if (f.id === activeFox.id) {
+            index = i;
+          }
+        });
+        foxes = funkiFoxes;
+      }
+
+      if (next) {
         index++;
-        index = index % (moreFoxes.length);
+        index = index % (foxes.length);
       } else {
         index--;
-        if(index < 0){
-          index = moreFoxes.length - 1;
+        if (index < 0) {
+          index = foxes.length - 1;
         }
       }
-      setActiveFox(moreFoxes[index]);
+      setActiveFox(foxes[index]);
     }
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      if(window.swiper !== undefined){
-        let Swiper = window.swiper;
-        new Swiper('.fox__swiper', {
-          slidesPerView: 6.8,
-          slidesPerGroup: 1,
-          spaceBetween: 8,
-          speed: 800,
-          observer: true,
-          observeParents: true,
-          navigation: {
-            nextEl: '.fox__swiper-button-next',
-            prevEl: '.fox__swiper-button-prev',
-          },
-          scrollbar: {
-            el: '.swiper-scrollbar',
-            draggable: true,
-          },
-        });
-      }
-    }, 100);
-  })
 
   return (
     <S.Container>
@@ -125,10 +114,13 @@ const Welcome: React.FC = () => {
         <S.SectionTitle>WHAT IS FUNKI FOXES?</S.SectionTitle>
         <S.WhatIsContent>
           <S.FoxImages>
-            <div className={"imageContainer"}><img src={"/images/what_1.png"} alt={'what_1'}/></div>
-            <div className={"imageContainer"}><img src={"/images/what_2.png"} alt={'what_2'}/></div>
-            <div className={"imageContainer"}><img src={"/images/what_3.png"} alt={'what_3'}/></div>
-            <div className={"imageContainer"}><img src={"/images/what_4.png"} alt={'what_4'}/></div>
+            {
+              funkiFoxes.map(f => (
+                <div key={f.id} className={"imageContainer"}>
+                  <Fox name={f.name} image={f.image} isFavorite={favorites.includes(f.id)} onToggleFavorite={() => onToggleFavorite(f.id)} onClick={() => onClick(f.id)}/>
+                </div>
+              ))
+            }
           </S.FoxImages>
           <S.FoxesCaption>
             <p>

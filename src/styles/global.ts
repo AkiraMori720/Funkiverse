@@ -7,7 +7,6 @@ export default createGlobalStyle`
 
   body,
   #root {
-    font-family: raleway,sans-serif;
     background-color: #262626;
     color: #FFF;
   }

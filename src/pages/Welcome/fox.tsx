@@ -13,9 +13,12 @@ interface Props {
 const Fox: React.FC<Props> = ({name, image, isFavorite, onToggleFavorite, onClick}) => {
 
   return (
-    <S.FoxContainer onClick={() => onClick()}>
+    <S.FoxContainer onClick={(event) => onClick()}>
       <S.FoxImage src={image}/>
-      <S.Favorite className={"favorite"} onClick={() => onToggleFavorite()}>
+      <S.Favorite className={"favorite"} onClick={(event) => {
+        event.stopPropagation();
+        onToggleFavorite();
+      }}>
         {
           isFavorite?
             <S.HearFillIcon size={24}/>:
